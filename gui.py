@@ -28,13 +28,13 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         self.candidate_1_radio_button.setFont(font)
         self.candidate_1_radio_button.setObjectName("candidate_1_radio_button")
-        self.candidate_1_radio_button_2 = QtWidgets.QRadioButton(parent=self.centralwidget)
-        self.candidate_1_radio_button_2.setGeometry(QtCore.QRect(160, 140, 100, 20))
+        self.candidate_2_radio_button = QtWidgets.QRadioButton(parent=self.centralwidget)
+        self.candidate_2_radio_button.setGeometry(QtCore.QRect(160, 140, 100, 20))
         font = QtGui.QFont()
         font.setFamily("Cochin")
         font.setPointSize(14)
-        self.candidate_1_radio_button_2.setFont(font)
-        self.candidate_1_radio_button_2.setObjectName("candidate_1_radio_button_2")
+        self.candidate_2_radio_button.setFont(font)
+        self.candidate_2_radio_button.setObjectName("candidate_1_radio_button_2")
         self.id_label = QtWidgets.QLabel(parent=self.centralwidget)
         self.id_label.setGeometry(QtCore.QRect(120, 40, 21, 20))
         self.id_label.setObjectName("id_label")
@@ -74,10 +74,13 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "My voting app"))
         self.submit_vote_button.setText(_translate("MainWindow", "Submit Vote"))
         self.candidate_1_radio_button.setText(_translate("MainWindow", "Jane"))
-        self.candidate_1_radio_button_2.setText(_translate("MainWindow", "Jhon"))
+        self.candidate_2_radio_button.setText(_translate("MainWindow", "Jhon"))
         self.id_label.setText(_translate("MainWindow", "ID: "))
         self.voting_app_label.setText(_translate("MainWindow", "Voting Application"))
         self.candidates_label.setText(_translate("MainWindow", "Candidates"))
+
+    
+
 
 
 if __name__ == "__main__":
