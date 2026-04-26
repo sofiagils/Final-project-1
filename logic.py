@@ -4,6 +4,8 @@ import os
 import csv
 
 class Logic(QMainWindow, Ui_MainWindow):
+    CSV_FILE_PATH = "./votes_db.csv"
+    
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -23,12 +25,20 @@ class Logic(QMainWindow, Ui_MainWindow):
             self.update_validation_label(candidate_error_msg, 'red')
             return
         
-        previous_vote_error_msg = self.validate_previous_votes()
+        previous_vote_error_msg = self.validate_previous_votes(voter_id)
         if previous_vote_error_msg:
             self.update_validation_label(previous_vote_error_msg, 'red')
             return
+
+        if os.path.isfile(Logic.CSV_FILE_PATH):
+            self.update_csv_file(voter_id, candidate)
+        else:
+            self.create_csv_file(voter_id, candidate)
         
+        self.update_validation_label("Vote saved!", 'green')
+
         
+
 
 
     def get_candidate(self):
@@ -52,14 +62,28 @@ class Logic(QMainWindow, Ui_MainWindow):
         self.validation_label.setText(message)
         self.validation_label.setStyleSheet(f"color: {color};")
 
+    def create_csv_file(self, voter_id, candidate):
+        with open(Logic.CSV_FILE_PATH, 'w', newline='') as votes_db_file:
+            writer = csv.writer(votes_db_file)
+            writer.writerows([
+                ["Voter ID", "Candidate"],
+                [voter_id, candidate]
+            ])
+
+    def update_csv_file(self, voter_id, candidate):
+        with open(Logic.CSV_FILE_PATH, 'a', newline='') as votes_db_file:
+            writer = csv.writer(votes_db_file)
+            writer.writerow([voter_id, candidate])
+
+
     def get_previous_voters(self):
-        with open("./votes_db.csv") as votes_db_file:
+        with open(Logic.CSV_FILE_PATH) as votes_db_file:
             reader = csv.reader(votes_db_file)
             return [] #finish
                 
 
     def validate_previous_votes(self, voter_id):
-        if not os.path.isfile("./votes_db.csv"):
+        if not os.path.isfile(Logic.CSV_FILE_PATH):
             return 
         previous_voters_ids = self.get_previous_voters()
         if voter_id in previous_voters_ids:
