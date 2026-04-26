@@ -38,9 +38,6 @@ class Logic(QMainWindow, Ui_MainWindow):
         self.update_validation_label("Vote saved!", 'green')
         self.clear_previous_selection()
 
-        
-
-
 
     def get_candidate(self):
         if self.candidate_1_radio_button.isChecked():
@@ -78,11 +75,15 @@ class Logic(QMainWindow, Ui_MainWindow):
 
 
     def get_previous_voters(self):
+        voter_ids = []
         with open(Logic.CSV_FILE_PATH) as votes_db_file:
-            reader = csv.reader(votes_db_file)
-            return [] #finish
-                
+            reader = csv.DictReader(votes_db_file)
+            for row in reader:
+                voter_ids.append(row["Voter ID"])
 
+        return voter_ids
+
+                
     def validate_previous_votes(self, voter_id):
         if not os.path.isfile(Logic.CSV_FILE_PATH):
             return 
@@ -100,6 +101,8 @@ class Logic(QMainWindow, Ui_MainWindow):
         self.candidate_2_radio_button.setAutoExclusive(True)
 
         self.voter_id_input.clear()
+
+   
             
 
 
