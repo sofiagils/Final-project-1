@@ -13,6 +13,7 @@ class Logic(QMainWindow, Ui_MainWindow):
         self.submit_vote_button.clicked.connect(lambda: self.save_vote())
 
     def save_vote(self) -> None:
+        """Save vote click handler and main app logic"""
         voter_id = self.get_voter_id()
         voter_id_error_msg = self.validate_voter_id(voter_id)
         if voter_id_error_msg:
@@ -40,27 +41,33 @@ class Logic(QMainWindow, Ui_MainWindow):
 
 
     def get_candidate(self) -> str | None:
+        """Get candidate from radio buttons"""
         if self.candidate_1_radio_button.isChecked():
             return self.candidate_1_radio_button.text()
         elif self.candidate_2_radio_button.isChecked():
             return self.candidate_2_radio_button.text()
 
     def validate_candidate(self, candidate: str) -> str | None:
+        """Validate if a candidate is selected"""
         if not candidate:
             return "Select one candidate"
 
     def get_voter_id(self) -> str:
+        """Get voter ID from input"""
         return self.voter_id_input.text()
 
     def validate_voter_id(self, voter_id: str) -> str | None:
+        """Validate if the voter ID has 9 digits"""
         if len(voter_id) != 9:
             return "ID should be 9 digits long"
         
     def update_validation_label(self, message: str, color: str) -> None:
+        """Update messages"""
         self.validation_label.setText(message)
         self.validation_label.setStyleSheet(f"color: {color};")
 
     def create_csv_file(self, voter_id: str, candidate: str) -> None:
+        """Create the csv file to store data"""
         with open(Logic.CSV_FILE_PATH, 'w', newline='') as votes_db_file:
             writer = csv.writer(votes_db_file)
             writer.writerows([
@@ -69,12 +76,14 @@ class Logic(QMainWindow, Ui_MainWindow):
             ])
 
     def update_csv_file(self, voter_id: str, candidate: str) -> None:
+        """Update the csv file with new data"""
         with open(Logic.CSV_FILE_PATH, 'a', newline='') as votes_db_file:
             writer = csv.writer(votes_db_file)
             writer.writerow([voter_id, candidate])
 
 
     def get_previous_voters(self) -> list:
+        """Get a list with all voter ids"""
         voter_ids = []
         with open(Logic.CSV_FILE_PATH) as votes_db_file:
             reader = csv.DictReader(votes_db_file)
@@ -85,6 +94,7 @@ class Logic(QMainWindow, Ui_MainWindow):
 
                 
     def validate_previous_votes(self, voter_id: str) -> str | None:
+        """Validate if the voter already voted"""
         if not os.path.isfile(Logic.CSV_FILE_PATH):
             return 
         previous_voters_ids = self.get_previous_voters()
@@ -92,6 +102,7 @@ class Logic(QMainWindow, Ui_MainWindow):
             return "Already voted"
         
     def clear_previous_selection(self) -> None:
+        """Clear all previous inputs"""
         self.candidate_1_radio_button.setAutoExclusive(False)
         self.candidate_1_radio_button.setChecked(False)
         self.candidate_1_radio_button.setAutoExclusive(True)
