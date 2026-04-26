@@ -36,6 +36,7 @@ class Logic(QMainWindow, Ui_MainWindow):
             self.create_csv_file(voter_id, candidate)
         
         self.update_validation_label("Vote saved!", 'green')
+        self.clear_previous_selection()
 
         
 
@@ -88,6 +89,17 @@ class Logic(QMainWindow, Ui_MainWindow):
         previous_voters_ids = self.get_previous_voters()
         if voter_id in previous_voters_ids:
             return "Already voted"
+        
+    def clear_previous_selection(self):
+        self.candidate_1_radio_button.setAutoExclusive(False)
+        self.candidate_1_radio_button.setChecked(False)
+        self.candidate_1_radio_button.setAutoExclusive(True)
+
+        self.candidate_2_radio_button.setAutoExclusive(False)
+        self.candidate_2_radio_button.setChecked(False)
+        self.candidate_2_radio_button.setAutoExclusive(True)
+
+        self.voter_id_input.clear()
             
 
 
