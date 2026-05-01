@@ -57,7 +57,7 @@ class Ui_MainWindow(object):
         self.candidates_label.setFont(font)
         self.candidates_label.setObjectName("candidates_label")
         self.validation_label = QtWidgets.QLabel(parent=self.centralwidget)
-        self.validation_label.setGeometry(QtCore.QRect(100, 210, 201, 20))
+        self.validation_label.setGeometry(QtCore.QRect(70, 210, 250, 20))
         self.validation_label.setText("")
         self.validation_label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.validation_label.setObjectName("validation_label")
