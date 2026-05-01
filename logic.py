@@ -54,12 +54,14 @@ class Logic(QMainWindow, Ui_MainWindow):
 
     def get_voter_id(self) -> str:
         """Get voter ID from input"""
-        return self.voter_id_input.text()
+        return self.voter_id_input.text().strip()
 
     def validate_voter_id(self, voter_id: str) -> str | None:
         """Validate if the voter ID has 9 digits"""
         if len(voter_id) != 9:
             return "ID should be 9 digits long"
+        if not voter_id.isalnum():
+            return "ID can not contain special characters"
         
     def update_validation_label(self, message: str, color: str) -> None:
         """Update messages"""
